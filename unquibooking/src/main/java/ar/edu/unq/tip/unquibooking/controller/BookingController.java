@@ -34,8 +34,8 @@ public class BookingController {
     @DeleteMapping(path="/{id}")
     public String deleteById(@PathVariable("id") Long id){
         boolean deleted = bookingService.deleteById(id);
-        String messageCondition = deleted ? "Booking deleted: " + id : "Booking could not be deleted: " + id;
-        return messageCondition;
+        String message = deleted ? "Booking deleted: " + id : "Booking could not be deleted: " + id;
+        return message;
     }
 
     @GetMapping("/query")
