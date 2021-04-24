@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import ar.edu.unq.tip.unquibooking.model.Booking;
 import ar.edu.unq.tip.unquibooking.services.BookingService;
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/booking")
 public class BookingController {
@@ -39,7 +40,7 @@ public class BookingController {
     }
 
     @GetMapping("/query")
-    public Optional<Booking> getByDesk(@RequestParam("prioridad") Long id){
+    public Optional<Booking> getByDesk(@RequestParam("id") Long id){
         return bookingService.getByDesk(id);
     }
 
