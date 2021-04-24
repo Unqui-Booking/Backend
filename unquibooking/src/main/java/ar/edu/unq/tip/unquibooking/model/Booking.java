@@ -1,7 +1,5 @@
 package ar.edu.unq.tip.unquibooking.model;
 
-import java.time.LocalDate;
-
 import javax.persistence.*;
 
 @Entity
@@ -16,20 +14,28 @@ public class Booking {
     @ManyToOne
     private Desk desk;
 
-    @Column
-    private LocalDate date;
+    @Column(nullable=false)
+    private String date;
     
-    @Column
+    @Column(nullable=false)
     private Integer startTime;
 
-    @Column
+    @Column(nullable=false)
     private Integer endTime;
 
-    public void setDate(LocalDate date){
+    public void setId(Long id){
+        this.id = id;
+    }
+
+    public Long getId(){
+        return id;
+    }
+
+    public void setDate(String date){
         this.date = date;
     }
 
-    public LocalDate getDate(){
+    public String getDate(){
         return date;
     }
 
