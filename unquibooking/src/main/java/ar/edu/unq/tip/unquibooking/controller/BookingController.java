@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import ar.edu.unq.tip.unquibooking.model.Booking;
+import ar.edu.unq.tip.unquibooking.model.Desk;
 import ar.edu.unq.tip.unquibooking.services.BookingService;
 
 @CrossOrigin("*")
@@ -40,8 +41,14 @@ public class BookingController {
     }
 
     @GetMapping("/query")
-    public Optional<Booking> getByDesk(@RequestParam("id") Long id){
-        return bookingService.getByDesk(id);
+    public ArrayList<Booking> getByDesk(@RequestParam("desk") Long desk){
+       return bookingService.getByDesk(desk);
     }
+
+    //@GetMapping("/query")
+    //public ArrayList<Booking> getByStartTime(@RequestParam("startTime") Integer startTime){
+    	
+    //    return bookingService.getByStartTime(startTime);
+    //}
 
 }
