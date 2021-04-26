@@ -37,7 +37,11 @@ public class BookingService {
         }
     }
 
-    public Optional<Booking> getByDesk(Long idDesk){
-        return bookingRepository.findByDesk(idDesk);
+    public ArrayList<Booking> getByDesk(Long desk){
+        return bookingRepository.findByDesk(desk);
     }
+
+    //public ArrayList<Booking> getByStartTime(Integer startTime){
+    //    return bookingRepository.findByStartTime(startTime);
+    //}
 }
