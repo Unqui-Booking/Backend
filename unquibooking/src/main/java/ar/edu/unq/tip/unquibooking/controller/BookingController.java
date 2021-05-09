@@ -2,12 +2,14 @@ package ar.edu.unq.tip.unquibooking.controller;
 
 import java.util.ArrayList;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import ar.edu.unq.tip.unquibooking.model.Booking;
-import ar.edu.unq.tip.unquibooking.model.Desk;
+import ar.edu.unq.tip.unquibooking.model.BookingDTO;
+import ar.edu.unq.tip.unquibooking.model.Seat;
 import ar.edu.unq.tip.unquibooking.services.BookingService;
 
 @CrossOrigin("*")
@@ -19,13 +21,13 @@ public class BookingController {
     BookingService bookingService;
 
     @GetMapping()
-    public ArrayList<Booking> getAllBookings(){
-        return bookingService.getAllBookings();
+    public ArrayList<BookingDTO> getAllBookings(){
+        return (ArrayList<BookingDTO>) bookingService.getAllBookings().stream().map(s-> new BookingDTO(s)).collect(Collectors.toList());
     }
 
     @PostMapping()
-    public Booking saveBooking(@RequestBody Booking booking){
-        return bookingService.saveBooking(booking);
+    public BookingDTO saveBooking(@RequestBody Booking booking){
+        return new BookingDTO(bookingService.saveBooking(booking));
     }
 
     @GetMapping(path="/{id}")
@@ -41,14 +43,10 @@ public class BookingController {
     }
 
     @GetMapping("/query")
-    public ArrayList<Booking> getByDesk(@RequestParam("desk") Long desk){
-       return bookingService.getByDesk(desk);
+    public ArrayList<BookingDTO> getBySeat(@RequestParam("seat") Seat seat){
+       return (ArrayList<BookingDTO>) bookingService.getBySeat(seat).stream().map(s-> new BookingDTO(s)).collect(Collectors.toList());
     }
 
-    //@GetMapping("/query")
-    //public ArrayList<Booking> getByStartTime(@RequestParam("startTime") Integer startTime){
-    	
-    //    return bookingService.getByStartTime(startTime);
-    //}
+
 
 }

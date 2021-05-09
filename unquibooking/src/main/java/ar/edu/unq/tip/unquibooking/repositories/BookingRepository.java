@@ -10,7 +10,8 @@ import ar.edu.unq.tip.unquibooking.model.Booking;
 @Repository
 public interface BookingRepository extends CrudRepository<Booking, Long>{
 
-    public abstract ArrayList<Booking> findByDesk(Long desk);
+    public abstract ArrayList<Booking> findBySeatId(Long seat);
+
     //public abstract ArrayList<Booking> findByStartTime(Integer startTime);
     
 }

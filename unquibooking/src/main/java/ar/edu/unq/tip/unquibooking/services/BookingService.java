@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ar.edu.unq.tip.unquibooking.model.Booking;
+import ar.edu.unq.tip.unquibooking.model.Seat;
 import ar.edu.unq.tip.unquibooking.repositories.BookingRepository;
 
 @Service
@@ -37,8 +38,8 @@ public class BookingService {
         }
     }
 
-    public ArrayList<Booking> getByDesk(Long desk){
-        return bookingRepository.findByDesk(desk);
+    public ArrayList<Booking> getBySeat(Seat seat){
+        return bookingRepository.findBySeatId(seat.getId());
     }
 
     //public ArrayList<Booking> getByStartTime(Integer startTime){

@@ -1,5 +1,7 @@
 package ar.edu.unq.tip.unquibooking.model;
 
+import java.time.LocalDate;
+
 import javax.persistence.*;
 
 @Entity
@@ -11,11 +13,13 @@ public class Booking {
     @Column(unique=true, nullable=false)
     private Long id;
 
-    @ManyToOne
-    private Desk desk;
+    @ManyToOne(cascade={CascadeType.REFRESH, CascadeType.MERGE})
+    @JoinColumn(name = "seat_id")
+    private Seat seat;
 
+    @Convert(converter = LocalDateConverter.class)
     @Column(nullable=false)
-    private String date;
+    private LocalDate date;
     
     @Column(nullable=false)
     private Integer startTime;
@@ -23,6 +27,15 @@ public class Booking {
     @Column(nullable=false)
     private Integer endTime;
 
+    public Booking(Seat seat, Integer startTime, Integer endTime, LocalDate date) {
+    	this.seat = seat;
+    	this.startTime = startTime;
+    	this.endTime = endTime;
+    	this.date = date;
+    }
+    
+    public Booking() { }
+    
     public void setId(Long id){
         this.id = id;
     }
@@ -31,11 +44,11 @@ public class Booking {
         return id;
     }
 
-    public void setDate(String date){
+    public void setDate(LocalDate date){
         this.date = date;
     }
 
-    public String getDate(){
+    public LocalDate getDate(){
         return date;
     }
 
@@ -44,7 +57,7 @@ public class Booking {
     }
 
     public Integer getStartTime(){
-        return this.startTime;
+        return startTime;
     }
 
     public void setEndTime(Integer time){
@@ -52,14 +65,15 @@ public class Booking {
     }
 
     public Integer getEndTime(){
-        return this.endTime;
+        return endTime;
     }
 
-    public void setDesk(Desk desk){
-        this.desk = desk;
-    }
+	public Seat getSeat() {
+		return seat;
+	}
 
-    public Desk getDesk(){
-        return desk;
-    }
+	public void setSeat(Seat seat) {
+		this.seat = seat;
+	}
+
 }
