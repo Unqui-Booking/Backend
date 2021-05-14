@@ -24,8 +24,8 @@ public class BookingService {
         return bookingRepository.save(booking);
     }
 
-    public Optional<Booking> getBooking(Long idBooking){
-        return bookingRepository.findById(idBooking);
+    public Booking getBooking(Long idBooking){
+        return bookingRepository.findById(idBooking).get();
     }
 
     public boolean deleteById(Long id){
@@ -38,8 +38,8 @@ public class BookingService {
         }
     }
 
-    public ArrayList<Booking> getBySeat(Seat seat){
-        return bookingRepository.findBySeatId(seat.getId());
+    public ArrayList<Booking> getBySeat(Long seat){
+        return bookingRepository.findBySeatId(seat);
     }
 
     //public ArrayList<Booking> getByStartTime(Integer startTime){

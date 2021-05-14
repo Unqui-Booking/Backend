@@ -1,23 +1,27 @@
-package ar.edu.unq.tip.unquibooking.model;
+package ar.edu.unq.tip.unquibooking.dto;
 
 import java.time.LocalDate;
+
+import ar.edu.unq.tip.unquibooking.model.Booking;
 
 public class BookingDTO {
 	
 	 private Long id;
-	 private Long seat;
+	 private SeatBookingDTO seat;
 	 private LocalDate date;
 	 private Integer startTime;
 	 private Integer endTime;
 	 
 	 public BookingDTO(Booking booking) {
 		 this.id = booking.getId();
-		 this.seat = booking.getSeat().getId();
+		 this.seat = new SeatBookingDTO(booking.getSeat());
 		 this.date = booking.getDate();
 		 this.startTime = booking.getStartTime();
 		 this.endTime = booking.getEndTime();
 	 }
 
+	 public BookingDTO() { }
+	 
 	public Long getId() {
 		return id;
 	}
@@ -26,11 +30,11 @@ public class BookingDTO {
 		this.id = id;
 	}
 
-	public Long getSeat() {
+	public SeatBookingDTO getSeat() {
 		return seat;
 	}
 
-	public void setSeat(Long seat) {
+	public void setSeat(SeatBookingDTO seat) {
 		this.seat = seat;
 	}
 

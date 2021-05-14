@@ -1,15 +1,14 @@
 package ar.edu.unq.tip.unquibooking.controller;
 
 import java.util.ArrayList;
-import java.util.Optional;
-import java.util.stream.Collectors;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import ar.edu.unq.tip.unquibooking.dto.BookingConverter;
+import ar.edu.unq.tip.unquibooking.dto.BookingDTO;
 import ar.edu.unq.tip.unquibooking.model.Booking;
-import ar.edu.unq.tip.unquibooking.model.BookingDTO;
-import ar.edu.unq.tip.unquibooking.model.Seat;
 import ar.edu.unq.tip.unquibooking.services.BookingService;
 
 @CrossOrigin("*")
@@ -19,20 +18,26 @@ public class BookingController {
     
     @Autowired
     BookingService bookingService;
+    @Autowired
+    BookingConverter bookingConverter;
 
     @GetMapping()
     public ArrayList<BookingDTO> getAllBookings(){
-        return (ArrayList<BookingDTO>) bookingService.getAllBookings().stream().map(s-> new BookingDTO(s)).collect(Collectors.toList());
-    }
+         List<Booking> bookings = bookingService.getAllBookings();
+         return bookingConverter.entityToDto(bookings);
+    		}
 
     @PostMapping()
-    public BookingDTO saveBooking(@RequestBody Booking booking){
-        return new BookingDTO(bookingService.saveBooking(booking));
+    public BookingDTO saveBooking(@RequestBody BookingDTO bookingDTO){
+    	Booking booking = bookingConverter.dtoToEntity(bookingDTO);
+    	booking = bookingService.saveBooking(booking);
+    	return bookingConverter.entityToDTO(booking);
     }
 
     @GetMapping(path="/{id}")
-    public Optional<Booking> getBooking(@PathVariable("id") Long id){
-        return bookingService.getBooking(id);
+    public BookingDTO getBooking(@PathVariable("id") Long id){
+    	Booking booking = bookingService.getBooking(id);
+        return bookingConverter.entityToDTO(booking);
     }
 
     @DeleteMapping(path="/{id}")
@@ -43,10 +48,10 @@ public class BookingController {
     }
 
     @GetMapping("/query")
-    public ArrayList<BookingDTO> getBySeat(@RequestParam("seat") Seat seat){
-       return (ArrayList<BookingDTO>) bookingService.getBySeat(seat).stream().map(s-> new BookingDTO(s)).collect(Collectors.toList());
+    public ArrayList<BookingDTO> getBySeat(@RequestParam("seat") Long seat){
+    	List<Booking> bookings = bookingService.getBySeat(seat);
+    	return bookingConverter.entityToDto(bookings);
     }
-
 
 
 }

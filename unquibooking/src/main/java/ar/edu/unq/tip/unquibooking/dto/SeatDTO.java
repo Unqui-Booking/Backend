@@ -1,4 +1,6 @@
-package ar.edu.unq.tip.unquibooking.model;
+package ar.edu.unq.tip.unquibooking.dto;
+
+import ar.edu.unq.tip.unquibooking.model.Seat;
 
 public class SeatDTO {
 	

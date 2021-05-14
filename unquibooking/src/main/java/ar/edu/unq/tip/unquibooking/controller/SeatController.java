@@ -6,9 +6,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import ar.edu.unq.tip.unquibooking.converter.SeatConverter;
+import ar.edu.unq.tip.unquibooking.dto.SeatConverter;
+import ar.edu.unq.tip.unquibooking.dto.SeatDTO;
 import ar.edu.unq.tip.unquibooking.model.Seat;
-import ar.edu.unq.tip.unquibooking.model.SeatDTO;
 import ar.edu.unq.tip.unquibooking.services.SeatService;
 
 @CrossOrigin("*")

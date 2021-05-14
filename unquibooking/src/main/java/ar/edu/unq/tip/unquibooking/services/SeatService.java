@@ -6,8 +6,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ar.edu.unq.tip.unquibooking.dto.SeatDTO;
 import ar.edu.unq.tip.unquibooking.model.Seat;
-import ar.edu.unq.tip.unquibooking.model.SeatDTO;
 import ar.edu.unq.tip.unquibooking.repositories.SeatRepository;
 
 @Service
