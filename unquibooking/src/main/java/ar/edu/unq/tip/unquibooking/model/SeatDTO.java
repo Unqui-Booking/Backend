@@ -8,13 +8,11 @@ public class SeatDTO {
 	
 	public SeatDTO(Seat seat) {
 		this.id = seat.getId();
-		//this.desk = seat.getDesk().getId(); 
 		this.desk = new DeskDTO(seat.getDesk().getId());
 		this.available = seat.getAvailable();
 	}
 	
-	public SeatDTO() {
-	}
+	public SeatDTO() { }
 	
 	public Long getId() {
 		return id;
