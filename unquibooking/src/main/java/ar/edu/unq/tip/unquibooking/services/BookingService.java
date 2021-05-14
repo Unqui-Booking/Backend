@@ -1,5 +1,6 @@
 package ar.edu.unq.tip.unquibooking.services;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ar.edu.unq.tip.unquibooking.model.Booking;
+import ar.edu.unq.tip.unquibooking.model.LocalDateConverter;
 import ar.edu.unq.tip.unquibooking.model.Seat;
 import ar.edu.unq.tip.unquibooking.repositories.BookingRepository;
 
@@ -45,4 +47,8 @@ public class BookingService {
     //public ArrayList<Booking> getByStartTime(Integer startTime){
     //    return bookingRepository.findByStartTime(startTime);
     //}
+    
+  public ArrayList<Booking> getByDate(LocalDate date){
+        return bookingRepository.findByDate(date);
+    }
 }

@@ -1,14 +1,18 @@
 package ar.edu.unq.tip.unquibooking.controller;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.web.bind.annotation.*;
 
 import ar.edu.unq.tip.unquibooking.dto.BookingConverter;
 import ar.edu.unq.tip.unquibooking.dto.BookingDTO;
 import ar.edu.unq.tip.unquibooking.model.Booking;
+import ar.edu.unq.tip.unquibooking.model.LocalDateConverter;
 import ar.edu.unq.tip.unquibooking.services.BookingService;
 
 @CrossOrigin("*")
@@ -53,5 +57,10 @@ public class BookingController {
     	return bookingConverter.entityToDto(bookings);
     }
 
+    @GetMapping("/queryDate")
+    public ArrayList<BookingDTO> getByDate(@RequestParam("date")@DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date){
+    	List<Booking> bookings = bookingService.getByDate(date);
+    	return bookingConverter.entityToDto(bookings);
+    }
 
 }
