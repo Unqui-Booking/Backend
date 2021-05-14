@@ -2,6 +2,8 @@ package ar.edu.unq.tip.unquibooking.model;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name = "seat")
 public class Seat {
@@ -11,16 +13,17 @@ public class Seat {
     @Column(unique=true, nullable=false, name="seat_id")
     private Long id;
     
-	@ManyToOne(cascade={CascadeType.REFRESH, CascadeType.MERGE})
+	@ManyToOne(cascade={CascadeType.REFRESH, CascadeType.MERGE}, fetch = FetchType.LAZY)
 	@JoinColumn(name = "desk_id")
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) 
 	private Desk desk;
     
-	@Column
+	@Column(nullable=false)
     private boolean available;
 	
-	public Seat(Desk desk) {
+	public Seat(Desk desk, boolean available) {
 		this.desk = desk;
-		this.available = true;
+		this.available = available;
 	}
 	
 	public Seat() { }

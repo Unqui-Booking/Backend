@@ -23,8 +23,8 @@ public class SeatService {
         return seatRepository.save(seat);
     }
 
-    public Optional<Seat> getSeat(Long idSeat){
-        return seatRepository.findById(idSeat);
+    public Seat getSeat(Long idSeat){
+        return seatRepository.findById(idSeat).get();
     }
 
     public boolean deleteById(Long id){

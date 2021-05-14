@@ -20,10 +20,14 @@ public class Desk {
 	@Column(length=50, nullable=false)
 	private String area;
 	
-	public Desk(String nameDesk, Integer maxAmountSeats, String area) {
+	@Column(nullable=false)
+	private boolean availableDesk;
+	
+	public Desk(String nameDesk, Integer maxAmountSeats, String area, boolean availableDesk) {
 		this.nameDesk = nameDesk;
 		this.maxAmountSeats = maxAmountSeats;
 		this.area = area.toLowerCase();
+		this.availableDesk = availableDesk;
 	}
 	
 	public Desk() { }
@@ -58,6 +62,14 @@ public class Desk {
 
 	public void setArea(String area) {
 		this.area = area;
+	}
+
+	public boolean getAvailableDesk() {
+		return availableDesk;
+	}
+
+	public void setAvailableDesk(boolean available) {
+		this.availableDesk = available;
 	}
 	
 	

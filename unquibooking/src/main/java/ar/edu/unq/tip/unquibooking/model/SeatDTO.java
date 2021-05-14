@@ -3,16 +3,18 @@ package ar.edu.unq.tip.unquibooking.model;
 public class SeatDTO {
 	
 	private Long id;
-	private Long desk;
+	private DeskDTO desk;
 	private boolean available;
 	
 	public SeatDTO(Seat seat) {
 		this.id = seat.getId();
-		this.desk = seat.getDesk().getId();
+		//this.desk = seat.getDesk().getId(); 
+		this.desk = new DeskDTO(seat.getDesk().getId());
 		this.available = seat.getAvailable();
 	}
 	
-	public SeatDTO() {}
+	public SeatDTO() {
+	}
 	
 	public Long getId() {
 		return id;
@@ -22,11 +24,11 @@ public class SeatDTO {
 		this.id = id;
 	}
 	
-	public Long getDesk() {
+	public DeskDTO getDesk() {
 		return desk;
 	}
 	
-	public void setDesk(Long desk) {
+	public void setDesk(DeskDTO desk) {
 		this.desk = desk;
 	}
 	
