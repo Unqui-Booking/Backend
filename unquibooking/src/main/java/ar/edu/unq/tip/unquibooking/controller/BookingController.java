@@ -51,15 +51,13 @@ public class BookingController {
         return message;
     }
 
-    @GetMapping("/query")
-    public ArrayList<BookingDTO> getBySeat(@RequestParam("seat") Long seat){
-    	List<Booking> bookings = bookingService.getBySeat(seat);
-    	return bookingConverter.entityToDto(bookings);
-    }
-
-    @GetMapping("/queryDate")
-    public ArrayList<BookingDTO> getByDate(@RequestParam("date")@DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date){
-    	List<Booking> bookings = bookingService.getByDate(date);
+    @GetMapping("/details")
+    public ArrayList<BookingDTO> getByDateAndStartTimeAndEndTime(
+    		@RequestParam("seat") Long seat,
+    		@RequestParam("date")@DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date,
+    		@RequestParam("startTime")Integer startTime,
+    		@RequestParam("endTime")Integer endTime){
+    	List<Booking> bookings = bookingService.getBySeatIdAndDateAndStartTimeAndEndTime(seat, date, startTime, endTime);
     	return bookingConverter.entityToDto(bookings);
     }
 
