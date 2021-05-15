@@ -4,7 +4,8 @@ import java.time.LocalDate;
 
 import javax.persistence.*;
 
-import org.springframework.format.annotation.DateTimeFormat;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 
 @Entity
 @Table(name= "booking")
@@ -15,11 +16,12 @@ public class Booking {
     @Column(unique=true, nullable=false)
     private Long id;
 
-    @ManyToOne(cascade={CascadeType.REFRESH, CascadeType.MERGE})
+    @ManyToOne(cascade=CascadeType.MERGE)
     @JoinColumn(name = "seat_id")
     private Seat seat;
 
-    @Convert(converter = LocalDateConverter.class)
+    //@Convert(converter = LocalDateConverter.class)
+    @JsonFormat(pattern="yyyy-MM-dd", shape=Shape.STRING)
     @Column(nullable=false)
     private LocalDate date;
     

@@ -40,7 +40,15 @@ public class BookingService {
         }
     }
 
+    public ArrayList<Booking> getBySeat(Long seat){
+        return bookingRepository.findBySeatId(seat);
+    }
+    
     public ArrayList<Booking> getBySeatIdAndDateAndStartTimeAndEndTime(Long seat, LocalDate date,Integer startTime, Integer endTime){
   	  return bookingRepository.findBySeatIdAndDateAndStartTimeAndEndTime(seat, date, startTime, endTime);
+    }
+    
+    public ArrayList<Booking> getBySeaIdAndDate(Long seat, LocalDate date){
+    	return bookingRepository.findBySeatIdAndDate(seat, date);
     }
 }

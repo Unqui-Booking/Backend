@@ -51,6 +51,12 @@ public class BookingController {
         return message;
     }
 
+    @GetMapping("/query")
+    public ArrayList<BookingDTO> getBySeat(@RequestParam("seat") Long seat){
+    	List<Booking> bookings = bookingService.getBySeat(seat);
+    	return bookingConverter.entityToDto(bookings);
+    }
+    
     @GetMapping("/details")
     public ArrayList<BookingDTO> getByDateAndStartTimeAndEndTime(
     		@RequestParam("seat") Long seat,
@@ -58,6 +64,14 @@ public class BookingController {
     		@RequestParam("startTime")Integer startTime,
     		@RequestParam("endTime")Integer endTime){
     	List<Booking> bookings = bookingService.getBySeatIdAndDateAndStartTimeAndEndTime(seat, date, startTime, endTime);
+    	return bookingConverter.entityToDto(bookings);
+    }
+    
+    @GetMapping("/sd")
+    public ArrayList<BookingDTO> getBySeatIdAndDate(
+    		@RequestParam("seat") Long seat,
+    		@RequestParam("date")@DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date){
+    	List<Booking> bookings = bookingService.getBySeaIdAndDate(seat, date);
     	return bookingConverter.entityToDto(bookings);
     }
 
