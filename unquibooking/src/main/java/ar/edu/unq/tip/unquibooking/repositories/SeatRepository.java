@@ -5,11 +5,10 @@ import java.util.ArrayList;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import ar.edu.unq.tip.unquibooking.model.Desk;
+import ar.edu.unq.tip.unquibooking.model.Seat;
 
 @Repository
-public interface DeskRepository extends CrudRepository<Desk, Long> {
-    
-	public abstract ArrayList<Desk> findByArea(String area);
+public interface SeatRepository extends CrudRepository<Seat, Long>{
+	public abstract ArrayList<Seat> findByDeskId(Long desk);
 	
 }

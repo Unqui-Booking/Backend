@@ -36,4 +36,8 @@ public class DeskService {
             return false;
         }
     }
+    
+    public ArrayList<Desk> getByArea(String area){
+    	return deskRepository.findByArea(area);
+    }
 }

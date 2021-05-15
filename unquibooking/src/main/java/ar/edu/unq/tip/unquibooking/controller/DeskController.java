@@ -38,4 +38,10 @@ public class DeskController {
         String message = deleted ? "Desk deleted: " + id : "Desk could not be deleted: " + id;
         return message;
     }
+    
+    @GetMapping("/query")
+    public ArrayList<Desk> getByArea(@RequestParam("area") String area){
+    	return deskService.getByArea(area);
+    }
+    
 }

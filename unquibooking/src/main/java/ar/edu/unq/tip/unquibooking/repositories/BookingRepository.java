@@ -1,5 +1,6 @@
 package ar.edu.unq.tip.unquibooking.repositories;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import org.springframework.data.repository.CrudRepository;
@@ -9,8 +10,10 @@ import ar.edu.unq.tip.unquibooking.model.Booking;
 
 @Repository
 public interface BookingRepository extends CrudRepository<Booking, Long>{
-
-    public abstract ArrayList<Booking> findByDesk(Long desk);
-    //public abstract ArrayList<Booking> findByStartTime(Integer startTime);
+	
+	public abstract ArrayList<Booking> findBySeatId(Long seat);
+	public abstract ArrayList<Booking> findBySeatIdAndDateAndStartTimeAndEndTime(Long seat, LocalDate date,Integer startTime, Integer endTime);
+	public abstract ArrayList<Booking> findBySeatIdAndDate(Long seat, LocalDate date);
+    
     
 }
