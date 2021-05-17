@@ -2,6 +2,7 @@ package ar.edu.unq.tip.unquibooking.controller;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,9 @@ import ar.edu.unq.tip.unquibooking.dto.BookingConverter;
 import ar.edu.unq.tip.unquibooking.dto.BookingDTO;
 import ar.edu.unq.tip.unquibooking.model.Booking;
 import ar.edu.unq.tip.unquibooking.model.LocalDateConverter;
+import ar.edu.unq.tip.unquibooking.model.Seat;
 import ar.edu.unq.tip.unquibooking.services.BookingService;
+import ar.edu.unq.tip.unquibooking.services.SeatService;
 
 @CrossOrigin("*")
 @RestController
@@ -24,6 +27,8 @@ public class BookingController {
     BookingService bookingService;
     @Autowired
     BookingConverter bookingConverter;
+    @Autowired
+    SeatService seatService;
 
     @GetMapping()
     public ArrayList<BookingDTO> getAllBookings(){
@@ -37,11 +42,17 @@ public class BookingController {
     	booking = bookingService.saveBooking(booking);
     	return bookingConverter.entityToDTO(booking);
     }
+    
+//    @PostMapping()
+//    public Booking saveBooking(@RequestBody Booking booking){
+//    	booking = bookingService.saveBooking(booking);
+//    	return booking;
+//    }
 
     @GetMapping(path="/{id}")
-    public BookingDTO getBooking(@PathVariable("id") Long id){
+    public Booking getBooking(@PathVariable("id") Long id){
     	Booking booking = bookingService.getBooking(id);
-        return bookingConverter.entityToDTO(booking);
+        return booking;
     }
 
     @DeleteMapping(path="/{id}")
@@ -58,7 +69,7 @@ public class BookingController {
     }
     
     @GetMapping("/details")
-    public ArrayList<BookingDTO> getByDateAndStartTimeAndEndTime(
+    public ArrayList<BookingDTO> getBySeatIdAndDateAndStartTimeAndEndTime(
     		@RequestParam("seat") Long seat,
     		@RequestParam("date")@DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date,
     		@RequestParam("startTime")Integer startTime,
@@ -73,6 +84,26 @@ public class BookingController {
     		@RequestParam("date")@DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date){
     	List<Booking> bookings = bookingService.getBySeaIdAndDate(seat, date);
     	return bookingConverter.entityToDto(bookings);
+    }
+    
+    @GetMapping("/availabled")
+    public HashMap<Long, Boolean> getMap(
+    		@RequestParam("desk") Long desk,
+    		@RequestParam("date")@DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date,
+    		@RequestParam("startTime")Integer startTime,
+    		@RequestParam("endTime")Integer endTime){
+    	
+    	HashMap<Long, Boolean> mapBooking = new HashMap<Long, Boolean>();
+    	ArrayList<BookingDTO> bookings = new ArrayList<BookingDTO>();
+    	
+    	ArrayList<Seat> seats = seatService.getByDesk(desk);
+    	
+    	for(int i=0; i<seats.size();i++) {
+    		bookings = getBySeatIdAndDateAndStartTimeAndEndTime(seats.get(i).getId(), date, startTime, endTime);
+    		mapBooking.put(seats.get(i).getId(), bookings.size()==0);
+    	}
+    	
+    	return mapBooking;
     }
 
 }
