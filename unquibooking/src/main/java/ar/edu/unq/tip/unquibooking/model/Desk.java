@@ -11,22 +11,21 @@ public class Desk {
 	@Column(unique=true, nullable=false, name="desk_id")
 	private Long id;
 
-	@Column(length=50, nullable=false, unique=true)
+	@Column(length=50, unique=true)
 	private String nameDesk;
-
-	@Column(nullable=false)
-	private Integer maxAmountSeats;
 	
-	@Column(length=50, nullable=false)
+	@Column(length=50)
 	private String area;
 	
-	@Column(nullable=false)
+	@Column
 	private boolean availableDesk;
+	
+	@Column
+	private boolean deleted = false;
 	
 	public Desk(String nameDesk, Integer maxAmountSeats, String area, boolean availableDesk) {
 		this.nameDesk = nameDesk;
-		this.maxAmountSeats = maxAmountSeats;
-		this.area = area.toLowerCase();
+		this.area = area;
 		this.availableDesk = availableDesk;
 	}
 	
@@ -47,14 +46,6 @@ public class Desk {
 	public void setNameDesk(String nameDesk){
 		this.nameDesk = nameDesk;
 	}
-	
-	public Integer getMaxAmountSeats(){
-		return maxAmountSeats;
-	}
-
-	public void setMaxAmountSeats(Integer maxAmountSeats){
-		this.maxAmountSeats = maxAmountSeats;
-	}
 
 	public String getArea() {
 		return area;
@@ -70,6 +61,14 @@ public class Desk {
 
 	public void setAvailableDesk(boolean available) {
 		this.availableDesk = available;
+	}
+
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
 	}
 	
 	
