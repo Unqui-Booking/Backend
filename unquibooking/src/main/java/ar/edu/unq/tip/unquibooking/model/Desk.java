@@ -21,12 +21,13 @@ public class Desk {
 	private boolean availableDesk;
 	
 	@Column
-	private boolean deleted = false;
+	private boolean deleted;
 	
-	public Desk(String nameDesk, Integer maxAmountSeats, String area, boolean availableDesk) {
+	public Desk(String nameDesk, String area, boolean availableDesk) {
 		this.nameDesk = nameDesk;
 		this.area = area;
 		this.availableDesk = availableDesk;
+		this.deleted = false;
 	}
 	
 	public Desk() { }

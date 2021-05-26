@@ -5,9 +5,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import ar.edu.unq.tip.unquibooking.exception.DeskBadRequest;
 import ar.edu.unq.tip.unquibooking.exception.DeskNotFoundException;
