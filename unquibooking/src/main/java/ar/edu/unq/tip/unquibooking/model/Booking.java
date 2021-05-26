@@ -20,7 +20,6 @@ public class Booking {
     @JoinColumn(name = "seat_id")
     private Seat seat;
 
-    //@Convert(converter = LocalDateConverter.class)
     @JsonFormat(pattern="yyyy-MM-dd", shape=Shape.STRING)
     @Column(nullable=false)
     private LocalDate date;
@@ -30,12 +29,16 @@ public class Booking {
 
     @Column(nullable=false)
     private Integer endTime;
+    
+    @Column
+	private boolean deleted;
 
     public Booking(Seat seat, Integer startTime, Integer endTime, LocalDate date) {
     	this.seat = seat;
     	this.startTime = startTime;
     	this.endTime = endTime;
     	this.date = date;
+    	this.deleted = false;
     }
     
     public Booking() { }
@@ -79,5 +82,15 @@ public class Booking {
 	public void setSeat(Seat seat) {
 		this.seat = seat;
 	}
+
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
+	}
+	
+	
 
 }
