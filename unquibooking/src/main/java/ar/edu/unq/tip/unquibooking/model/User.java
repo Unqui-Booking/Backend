@@ -29,7 +29,7 @@ public class User {
 	private String password;
 	
 	@Column(nullable=false)
-	private boolean student;
+	private boolean admin;
 	
 	@Column(nullable=false)
 	private boolean deleted;
@@ -39,7 +39,7 @@ public class User {
 		this.lastName = lastName;
 		this.mail = mail;
 		this.password = password;
-		this.student = true;
+		this.admin = false;
 		this.deleted = false;
 	}
 	
@@ -87,11 +87,11 @@ public class User {
 	}
 
 	public boolean isStudent() {
-		return student;
+		return admin;
 	}
 
 	public void setStudent(boolean student) {
-		this.student = student;
+		this.admin = student;
 	}
 
 	public boolean isDeleted() {
