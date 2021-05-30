@@ -42,6 +42,10 @@ public class UserService {
 		return userRepository.findByMail(mail);
 	}
 	
+	public ArrayList<User> getUserByMailAndPassword(String mail, String password){
+		return userRepository.findByMailAndPassword(mail, password);
+	}
+	
 	public boolean validateName(String name) {
 		return name.length() > 3 && name.split(" ").length >= 2 && !name.matches(".*[1234567890].*");
 	}

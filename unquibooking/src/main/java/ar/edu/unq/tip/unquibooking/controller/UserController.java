@@ -45,5 +45,10 @@ public class UserController {
 	public ArrayList<User> getUserByMail(@RequestParam("mail") String mail){
 		return userService.getUserByMail(mail);
 	}
+	
+	@GetMapping("/login")
+	public ArrayList<User> getUserByMailAndPassword(@RequestParam("mail") String mail, @RequestParam("password") String password){
+		return userService.getUserByMailAndPassword(mail, password);
+	}
 
 }

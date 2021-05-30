@@ -11,5 +11,6 @@ import ar.edu.unq.tip.unquibooking.model.User;
 public interface UserRepository extends CrudRepository<User, Long>{
 
 	public abstract ArrayList<User> findByMail(String mail);
+	public abstract ArrayList<User> findByMailAndPassword(String mail, String password);
 	
 }
