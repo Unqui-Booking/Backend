@@ -16,27 +16,23 @@ public class User {
 	@Column(nullable=false)
 	private Long id;
 	
-	@Column(nullable=false)
+	@Column
 	private String name;
 	
-	@Column(nullable=false)
-	private String lastName;
-	
-	@Column(nullable=false)
+	@Column
 	private String mail;
 	
-	@Column(nullable=false)
+	@Column
 	private String password;
 	
-	@Column(nullable=false)
+	@Column
 	private boolean admin;
 	
-	@Column(nullable=false)
+	@Column
 	private boolean deleted;
 	
-	public User(String name, String lastName, String mail, String password) {
+	public User(String name, String mail, String password) {
 		this.name = name;
-		this.lastName = lastName;
 		this.mail = mail;
 		this.password = password;
 		this.admin = false;
@@ -44,7 +40,6 @@ public class User {
 	}
 	
 	public User() {}
-	
 
 	public Long getId() {
 		return id;
@@ -60,14 +55,6 @@ public class User {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
 	}
 
 	public String getMail() {
@@ -86,12 +73,12 @@ public class User {
 		this.password = password;
 	}
 
-	public boolean isStudent() {
+	public boolean getAdmin() {
 		return admin;
 	}
 
-	public void setStudent(boolean student) {
-		this.admin = student;
+	public void setAdmin(boolean admin) {
+		this.admin = admin;
 	}
 
 	public boolean isDeleted() {
@@ -101,7 +88,6 @@ public class User {
 	public void setDeleted(boolean deleted) {
 		this.deleted = deleted;
 	}
-	
 	
 	
 }

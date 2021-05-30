@@ -1,13 +1,16 @@
 package ar.edu.unq.tip.unquibooking.services;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.apache.commons.collections4.IteratorUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ar.edu.unq.tip.unquibooking.exception.DeskBadRequest;
+
+import ar.edu.unq.tip.unquibooking.exception.DeskBadRequestException;
 import ar.edu.unq.tip.unquibooking.exception.DeskNotFoundException;
 import ar.edu.unq.tip.unquibooking.model.Desk;
 import ar.edu.unq.tip.unquibooking.repositories.DeskRepository;
@@ -22,9 +25,13 @@ public class DeskService {
         return (ArrayList<Desk>) deskRepository.findAll();
     }
     
-    public Desk saveDesk(Desk desk) throws DeskBadRequest{
+//    public List<Desk> getAllDesks(){
+//        return  IteratorUtils.toList(deskRepository.findAll().iterator());
+//    }
+    
+    public Desk saveDesk(Desk desk) throws DeskBadRequestException{
     	if(!validate(desk)) {
-    		throw new DeskBadRequest("Wrong desk");
+    		throw new DeskBadRequestException("Wrong desk");
     	}
         return deskRepository.save(desk);
     }
