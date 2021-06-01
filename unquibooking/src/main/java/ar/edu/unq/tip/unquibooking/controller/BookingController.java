@@ -9,7 +9,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import ar.edu.unq.tip.unquibooking.exception.BookingNotFoundException;
+import ar.edu.unq.tip.unquibooking.exception.BookingRegisteredWithAdminUserException;
 import ar.edu.unq.tip.unquibooking.exception.SeatNotFoundException;
+import ar.edu.unq.tip.unquibooking.exception.UserNotFoundException;
 import ar.edu.unq.tip.unquibooking.model.Booking;
 import ar.edu.unq.tip.unquibooking.model.Seat;
 import ar.edu.unq.tip.unquibooking.services.BookingService;
@@ -31,7 +33,7 @@ public class BookingController {
     }
     
     @PostMapping()
-    public Booking saveBooking(@RequestBody Booking booking) throws SeatNotFoundException{
+    public Booking saveBooking(@RequestBody Booking booking) throws SeatNotFoundException, UserNotFoundException, BookingRegisteredWithAdminUserException{
     	booking = bookingService.saveBooking(booking);
     	return booking;
     }

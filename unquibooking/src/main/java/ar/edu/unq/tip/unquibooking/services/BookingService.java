@@ -8,9 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ar.edu.unq.tip.unquibooking.exception.BookingNotFoundException;
+import ar.edu.unq.tip.unquibooking.exception.BookingRegisteredWithAdminUserException;
 import ar.edu.unq.tip.unquibooking.exception.SeatNotFoundException;
+import ar.edu.unq.tip.unquibooking.exception.UserNotFoundException;
 import ar.edu.unq.tip.unquibooking.model.Booking;
 import ar.edu.unq.tip.unquibooking.model.Seat;
+import ar.edu.unq.tip.unquibooking.model.User;
 import ar.edu.unq.tip.unquibooking.repositories.BookingRepository;
 
 @Service
@@ -20,16 +23,24 @@ public class BookingService {
     BookingRepository bookingRepository;
     @Autowired
     SeatService seatService;
+    @Autowired
+    UserService userService;
 
     public ArrayList<Booking> getAllBookings(){
         return (ArrayList<Booking>) bookingRepository.findAll();
     }
 
-    public Booking saveBooking(Booking booking) throws SeatNotFoundException{
+    public Booking saveBooking(Booking booking) throws SeatNotFoundException, UserNotFoundException, BookingRegisteredWithAdminUserException{
     	Long seatId = booking.getSeat().getId();
     	Seat seat = seatService.getSeat(seatId);
+    	Long userId = booking.getUser().getId();
+    	User user = userService.getUSer(userId);
+    	if(user.isAdmin()) {
+    		throw new BookingRegisteredWithAdminUserException("Booking registered with admin user");
+    	}
     	Booking newBooking = bookingRepository.save(booking);
     	newBooking.setSeat(seat);
+    	newBooking.setUser(user);
         return newBooking;
     }
 

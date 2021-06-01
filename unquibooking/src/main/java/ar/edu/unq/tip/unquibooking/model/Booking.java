@@ -32,13 +32,18 @@ public class Booking {
     
     @Column
 	private boolean deleted;
+    
+    @ManyToOne(cascade=CascadeType.MERGE)
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    public Booking(Seat seat, Integer startTime, Integer endTime, LocalDate date) {
+    public Booking(Seat seat, Integer startTime, Integer endTime, LocalDate date, User user) {
     	this.seat = seat;
     	this.startTime = startTime;
     	this.endTime = endTime;
     	this.date = date;
     	this.deleted = false;
+    	this.user = user;
     }
     
     public Booking() { }
@@ -89,6 +94,14 @@ public class Booking {
 
 	public void setDeleted(boolean deleted) {
 		this.deleted = deleted;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 	
 	

@@ -13,7 +13,7 @@ public class User {
 	
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
-	@Column(nullable=false)
+	@Column(nullable=false, name="user_id")
 	private Long id;
 	
 	@Column
@@ -73,7 +73,7 @@ public class User {
 		this.password = password;
 	}
 
-	public boolean getAdmin() {
+	public boolean isAdmin() {
 		return admin;
 	}
 
