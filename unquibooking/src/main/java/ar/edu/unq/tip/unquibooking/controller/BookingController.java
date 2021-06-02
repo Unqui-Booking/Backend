@@ -90,5 +90,10 @@ public class BookingController {
     	
     	return mapBooking;
     }
+    
+    @GetMapping("/user")
+    public ArrayList<Booking> getByUser(@RequestParam("user") Long userId){
+    	return bookingService.getByUSer(userId);
+    }
 
 }

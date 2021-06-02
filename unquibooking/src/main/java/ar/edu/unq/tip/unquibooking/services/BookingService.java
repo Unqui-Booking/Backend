@@ -73,4 +73,8 @@ public class BookingService {
     public ArrayList<Booking> getBySeaIdAndDate(Long seat, LocalDate date){
     	return bookingRepository.findBySeatIdAndDate(seat, date);
     }
+    
+    public ArrayList<Booking> getByUSer(Long user){
+    	return bookingRepository.findByUserId(user);
+    }
 }
