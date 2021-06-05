@@ -1,6 +1,6 @@
 package ar.edu.unq.tip.unquibooking.controller;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +20,7 @@ public class DeskController {
     DeskService deskService;
 
     @GetMapping()
-    public ArrayList<Desk> getAllDesk(){
+    public List<Desk> getAllDesk(){
         return deskService.getAllDesks();
     }
 
@@ -42,7 +42,7 @@ public class DeskController {
     }
     
     @GetMapping("/query")
-    public ArrayList<Desk> getByArea(@RequestParam("area") String area){
+    public List<Desk> getByArea(@RequestParam("area") String area){
     	return deskService.getByArea(area);
     }
     

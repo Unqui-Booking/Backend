@@ -1,6 +1,6 @@
 package ar.edu.unq.tip.unquibooking.controller;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ar.edu.unq.tip.unquibooking.exception.UserBadRequestException;
 import ar.edu.unq.tip.unquibooking.exception.UserNotFoundException;
-import ar.edu.unq.tip.unquibooking.model.Booking;
 import ar.edu.unq.tip.unquibooking.model.User;
 import ar.edu.unq.tip.unquibooking.services.UserService;
 
@@ -27,7 +26,7 @@ public class UserController {
 	private UserService userService;
 	
 	@GetMapping()
-    public ArrayList<User> getAllUsers(){
+    public List<User> getAllUsers(){
          return userService.getAllUsers();
     }
 	
@@ -42,12 +41,12 @@ public class UserController {
 	}
 	
 	@GetMapping("/query")
-	public ArrayList<User> getUserByMail(@RequestParam("mail") String mail){
+	public List<User> getUserByMail(@RequestParam("mail") String mail){
 		return userService.getUserByMail(mail);
 	}
 	
 	@GetMapping("/login")
-	public ArrayList<User> getUserByMailAndPassword(@RequestParam("mail") String mail, @RequestParam("password") String password){
+	public List<User> getUserByMailAndPassword(@RequestParam("mail") String mail, @RequestParam("password") String password){
 		return userService.getUserByMailAndPassword(mail, password);
 	}
 

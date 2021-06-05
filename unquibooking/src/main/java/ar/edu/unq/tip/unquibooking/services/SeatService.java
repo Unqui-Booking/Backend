@@ -1,8 +1,9 @@
 package ar.edu.unq.tip.unquibooking.services;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
+import org.apache.commons.collections4.IteratorUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,8 +20,8 @@ public class SeatService {
 	@Autowired
 	DeskService deskService;
 	
-    public ArrayList<Seat> getAllSeats(){
-        return (ArrayList<Seat>) seatRepository.findAll();
+    public List<Seat> getAllSeats(){
+        return IteratorUtils.toList(seatRepository.findAll().iterator());
     }
     
     public Seat saveSeat(Seat seat) throws DeskNotFoundException{
@@ -49,7 +50,7 @@ public class SeatService {
         return optionalSeat.get().isDeleted();
     }
 
-	public ArrayList<Seat> getByDesk(Long desk) {
+	public List<Seat> getByDesk(Long desk) {
         return seatRepository.findByDeskId(desk);
     }
 

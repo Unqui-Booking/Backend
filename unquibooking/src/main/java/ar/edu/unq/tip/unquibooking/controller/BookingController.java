@@ -1,10 +1,9 @@
 package ar.edu.unq.tip.unquibooking.controller;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Locale;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +30,7 @@ public class BookingController {
     SeatService seatService;
 
     @GetMapping()
-    public ArrayList<Booking> getAllBookings(){
+    public List<Booking> getAllBookings(){
          return bookingService.getAllBookings();
     }
     
@@ -54,12 +53,12 @@ public class BookingController {
     }
 
     @GetMapping("/query")
-    public ArrayList<Booking> getBySeat(@RequestParam("seat") Long seat){
+    public List<Booking> getBySeat(@RequestParam("seat") Long seat){
     	return bookingService.getBySeat(seat);
     }
     
     @GetMapping("/details")
-    public ArrayList<Booking> getBySeatIdAndDateAndStartTimeAndEndTime(
+    public List<Booking> getBySeatIdAndDateAndStartTimeAndEndTime(
     		@RequestParam("seat") Long seat,
     		@RequestParam("date")@DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date,
     		@RequestParam("startTime")Integer startTime,
@@ -68,7 +67,7 @@ public class BookingController {
     }
     
     @GetMapping("/sd")
-    public ArrayList<Booking> getBySeatIdAndDate(
+    public List<Booking> getBySeatIdAndDate(
     		@RequestParam("seat") Long seat,
     		@RequestParam("date")@DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date){
     	return bookingService.getBySeaIdAndDate(seat, date);
@@ -82,9 +81,9 @@ public class BookingController {
     		@RequestParam("endTime")Integer endTime){
     	
     	HashMap<Long, Boolean> mapBooking = new HashMap<Long, Boolean>();
-    	ArrayList<Booking> bookings = new ArrayList<Booking>();
+    	List<Booking> bookings = new ArrayList<Booking>();
     	
-    	ArrayList<Seat> seats = seatService.getByDesk(desk);
+    	List<Seat> seats = seatService.getByDesk(desk);
     	
     	for(int i=0; i<seats.size();i++) {
     		bookings = getBySeatIdAndDateAndStartTimeAndEndTime(seats.get(i).getId(), date, startTime, endTime);
@@ -95,22 +94,22 @@ public class BookingController {
     }
     
     @GetMapping("/user")
-    public ArrayList<Booking> getByUser(@RequestParam("user") Long userId){
+    public List<Booking> getByUser(@RequestParam("user") Long userId){
     	return bookingService.getByUSer(userId);
     }
     
     @GetMapping("/historical")
-    public ArrayList<Booking> getHistoricalBookingsByUser(@RequestParam("user") Long userId){
-    	ArrayList<Booking> bookings = bookingService.getByUSer(userId);
+    public List<Booking> getHistoricalBookingsByUser(@RequestParam("user") Long userId){
+    	List<Booking> bookings = bookingService.getByUSer(userId);
     	LocalDate today = LocalDate.now(); 
-    	return (ArrayList<Booking>) bookings.stream().filter(b -> b.getDate().isBefore(today)).collect(Collectors.toList());
+    	return bookings.stream().filter(b -> b.getDate().isBefore(today)).collect(Collectors.toList());
     }
     
     @GetMapping("/current")
-    public ArrayList<Booking> getCurrentBookingsByUser(@RequestParam("user") Long userId){
-    	ArrayList<Booking> bookings = bookingService.getByUSer(userId);
+    public List<Booking> getCurrentBookingsByUser(@RequestParam("user") Long userId){
+    	List<Booking> bookings = bookingService.getByUSer(userId);
     	LocalDate today = LocalDate.now(); 
-    	return (ArrayList<Booking>) bookings.stream().filter(b -> b.getDate().isAfter(today) || b.getDate().equals(today)).collect(Collectors.toList());
+    	return bookings.stream().filter(b -> b.getDate().isAfter(today) || b.getDate().equals(today)).collect(Collectors.toList());
     }
 
 }

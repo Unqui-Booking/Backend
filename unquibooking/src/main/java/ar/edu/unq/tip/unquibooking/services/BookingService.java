@@ -1,9 +1,10 @@
 package ar.edu.unq.tip.unquibooking.services;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
+import org.apache.commons.collections4.IteratorUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,10 +27,10 @@ public class BookingService {
     @Autowired
     UserService userService;
 
-    public ArrayList<Booking> getAllBookings(){
-        return (ArrayList<Booking>) bookingRepository.findAll();
+    public List<Booking> getAllBookings(){
+        return IteratorUtils.toList(bookingRepository.findAll().iterator());
     }
-
+    
     public Booking saveBooking(Booking booking) throws SeatNotFoundException, UserNotFoundException, BookingRegisteredWithAdminUserException{
     	Long seatId = booking.getSeat().getId();
     	Seat seat = seatService.getSeat(seatId);
@@ -62,19 +63,19 @@ public class BookingService {
         return optionalBooking.get().isDeleted();
     }
 
-    public ArrayList<Booking> getBySeat(Long seat){
+    public List<Booking> getBySeat(Long seat){
         return bookingRepository.findBySeatId(seat);
     }
     
-    public ArrayList<Booking> getBySeatIdAndDateAndStartTimeAndEndTime(Long seat, LocalDate date,Integer startTime, Integer endTime){
+    public List<Booking> getBySeatIdAndDateAndStartTimeAndEndTime(Long seat, LocalDate date,Integer startTime, Integer endTime){
   	  return bookingRepository.findBySeatIdAndDateAndStartTimeAndEndTime(seat, date, startTime, endTime);
     }
     
-    public ArrayList<Booking> getBySeaIdAndDate(Long seat, LocalDate date){
+    public List<Booking> getBySeaIdAndDate(Long seat, LocalDate date){
     	return bookingRepository.findBySeatIdAndDate(seat, date);
     }
     
-    public ArrayList<Booking> getByUSer(Long user){
+    public List<Booking> getByUSer(Long user){
     	return bookingRepository.findByUserId(user);
     }
 }

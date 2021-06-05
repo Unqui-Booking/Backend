@@ -1,6 +1,5 @@
 package ar.edu.unq.tip.unquibooking.services;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -20,14 +19,10 @@ public class DeskService {
 
     @Autowired
     DeskRepository deskRepository;
-
-    public ArrayList<Desk> getAllDesks(){
-        return (ArrayList<Desk>) deskRepository.findAll();
-    }
     
-//    public List<Desk> getAllDesks(){
-//        return  IteratorUtils.toList(deskRepository.findAll().iterator());
-//    }
+    public List<Desk> getAllDesks(){
+        return  IteratorUtils.toList(deskRepository.findAll().iterator());
+    }
     
     public Desk saveDesk(Desk desk) throws DeskBadRequestException{
     	if(!validate(desk)) {
@@ -54,14 +49,14 @@ public class DeskService {
         return optionalDesk.get().isDeleted();
     }
     
-    public ArrayList<Desk> getByArea(String area){
+    public List<Desk> getByArea(String area){
     	return deskRepository.findByArea(area);
     }
     
     private boolean validate(Desk desk) {
     	String area = desk.getArea();
     	boolean correctArea = area.equals("silent") || area.equals("general");
-    	ArrayList<String> allNamesDesk = (ArrayList<String>) getAllDesks().stream().map(d -> d.getNameDesk().toLowerCase()).collect(Collectors.toList());
+    	List<String> allNamesDesk = getAllDesks().stream().map(d -> d.getNameDesk().toLowerCase()).collect(Collectors.toList());
     	boolean uniqueName = !allNamesDesk.contains(desk.getNameDesk().toLowerCase());
     	return correctArea && uniqueName;
     }

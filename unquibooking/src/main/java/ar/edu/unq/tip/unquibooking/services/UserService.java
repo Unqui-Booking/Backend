@@ -1,9 +1,10 @@
 package ar.edu.unq.tip.unquibooking.services;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.apache.commons.collections4.IteratorUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,8 +19,8 @@ public class UserService {
 	@Autowired
 	private UserRepository userRepository;
 	
-	public ArrayList<User> getAllUsers(){
-		return (ArrayList<User>) userRepository.findAll();
+	public List<User> getAllUsers(){
+		return IteratorUtils.toList(userRepository.findAll().iterator());
 	}
 	
 	public User saveUser(User user) throws UserBadRequestException {
@@ -38,11 +39,11 @@ public class UserService {
         return optionalUser.get();
 	}
 	
-	public ArrayList<User> getUserByMail(String mail){
+	public List<User> getUserByMail(String mail){
 		return userRepository.findByMail(mail);
 	}
 	
-	public ArrayList<User> getUserByMailAndPassword(String mail, String password){
+	public List<User> getUserByMailAndPassword(String mail, String password){
 		return userRepository.findByMailAndPassword(mail, password);
 	}
 	
@@ -51,7 +52,7 @@ public class UserService {
 	}
 	
 	public boolean validateMail(String mail) {
-		ArrayList<String> allMails = (ArrayList<String>) getAllUsers().stream().map(u -> u.getMail().toLowerCase()).collect(Collectors.toList());
+		List<String> allMails = getAllUsers().stream().map(u -> u.getMail().toLowerCase()).collect(Collectors.toList());
     	boolean uniqueMail = allMails.contains(mail);
 		return mail.substring(mail.length()-19, mail.length()).equals("@alu.edu.unq.com.ar") && mail.length()>19 && !uniqueMail;
 	}
