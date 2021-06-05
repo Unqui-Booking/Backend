@@ -1,8 +1,11 @@
 package ar.edu.unq.tip.unquibooking.controller;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -94,6 +97,20 @@ public class BookingController {
     @GetMapping("/user")
     public ArrayList<Booking> getByUser(@RequestParam("user") Long userId){
     	return bookingService.getByUSer(userId);
+    }
+    
+    @GetMapping("/historical")
+    public ArrayList<Booking> getHistoricalBookingsByUser(@RequestParam("user") Long userId){
+    	ArrayList<Booking> bookings = bookingService.getByUSer(userId);
+    	LocalDate today = LocalDate.now(); 
+    	return (ArrayList<Booking>) bookings.stream().filter(b -> b.getDate().isBefore(today)).collect(Collectors.toList());
+    }
+    
+    @GetMapping("/current")
+    public ArrayList<Booking> getCurrentBookingsByUser(@RequestParam("user") Long userId){
+    	ArrayList<Booking> bookings = bookingService.getByUSer(userId);
+    	LocalDate today = LocalDate.now(); 
+    	return (ArrayList<Booking>) bookings.stream().filter(b -> b.getDate().isAfter(today) || b.getDate().equals(today)).collect(Collectors.toList());
     }
 
 }
