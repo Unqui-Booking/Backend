@@ -9,10 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ar.edu.unq.tip.unquibooking.exception.BookingNotFoundException;
+import ar.edu.unq.tip.unquibooking.exception.BookingNotUpdateException;
 import ar.edu.unq.tip.unquibooking.exception.BookingRegisteredWithAdminUserException;
 import ar.edu.unq.tip.unquibooking.exception.SeatNotFoundException;
 import ar.edu.unq.tip.unquibooking.exception.UserNotFoundException;
 import ar.edu.unq.tip.unquibooking.model.Booking;
+import ar.edu.unq.tip.unquibooking.model.Desk;
 import ar.edu.unq.tip.unquibooking.model.Seat;
 import ar.edu.unq.tip.unquibooking.model.User;
 import ar.edu.unq.tip.unquibooking.repositories.BookingRepository;
@@ -31,18 +33,44 @@ public class BookingService {
         return IteratorUtils.toList(bookingRepository.findAll().iterator());
     }
     
-    public Booking saveBooking(Booking booking) throws SeatNotFoundException, UserNotFoundException, BookingRegisteredWithAdminUserException{
+    public Booking saveBooking(Booking booking) throws SeatNotFoundException, UserNotFoundException, BookingRegisteredWithAdminUserException, BookingNotFoundException {
+    	    
+    	Booking result = null;
+    	
     	Long seatId = booking.getSeat().getId();
     	Seat seat = seatService.getSeat(seatId);
     	Long userId = booking.getUser().getId();
     	User user = userService.getUSer(userId);
+    	
     	if(user.isAdmin()) {
     		throw new BookingRegisteredWithAdminUserException("Booking registered with admin user");
     	}
-    	Booking newBooking = bookingRepository.save(booking);
+    	
+    	if(booking.getId()!= null) {//if booking existing
+    		result = updateBooking(booking, seat, user);//update existing booking
+    	}else {
+    		result = registerBooking(booking, seat, user); //create new booking
+    	}
+    	return result;
+    }
+    
+    private Booking updateBooking(Booking booking, Seat seat, User user) throws BookingNotFoundException {
+		Booking existingBooking = this.getBooking(booking.getId());
+		existingBooking.setSeat(seat);
+		existingBooking.setUser(user);
+		existingBooking.setDate(booking.getDate());
+		existingBooking.setDeleted(booking.isDeleted());
+		existingBooking.setEndTime(booking.getEndTime());
+		existingBooking.setStartTime(booking.getStartTime());
+		bookingRepository.save(existingBooking);
+		return existingBooking;
+    }
+    
+    private Booking registerBooking(Booking booking, Seat seat, User user) {
+		Booking newBooking = bookingRepository.save(booking);
     	newBooking.setSeat(seat);
     	newBooking.setUser(user);
-        return newBooking;
+    	return newBooking;
     }
 
     public Booking getBooking(Long idBooking) throws BookingNotFoundException{
@@ -75,8 +103,8 @@ public class BookingService {
     	return bookingRepository.findBySeatIdAndDate(seat, date);
     }
     
-    public List<Booking> getByUSer(Long user){
-    	return bookingRepository.findByUserId(user);
+    public List<Booking> getByUSer(Long user, boolean deleted){
+    	return bookingRepository.findByUserIdAndDeleted(user, deleted);
     }
     
     public List<Booking> getByDate(LocalDate date){

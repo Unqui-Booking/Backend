@@ -11,6 +11,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import ar.edu.unq.tip.unquibooking.exception.BookingNotFoundException;
+import ar.edu.unq.tip.unquibooking.exception.BookingNotUpdateException;
 import ar.edu.unq.tip.unquibooking.exception.BookingRegisteredWithAdminUserException;
 import ar.edu.unq.tip.unquibooking.exception.SeatNotFoundException;
 import ar.edu.unq.tip.unquibooking.exception.UserNotFoundException;
@@ -35,7 +36,7 @@ public class BookingController {
     }
     
     @PostMapping()
-    public Booking saveBooking(@RequestBody Booking booking) throws SeatNotFoundException, UserNotFoundException, BookingRegisteredWithAdminUserException{
+    public Booking saveBooking(@RequestBody Booking booking) throws SeatNotFoundException, UserNotFoundException, BookingRegisteredWithAdminUserException, BookingNotFoundException{
     	booking = bookingService.saveBooking(booking);
     	return booking;
     }
@@ -95,19 +96,19 @@ public class BookingController {
     
     @GetMapping("/user")
     public List<Booking> getByUser(@RequestParam("user") Long userId){
-    	return bookingService.getByUSer(userId);
+    	return bookingService.getByUSer(userId, false);
     }
     
     @GetMapping("/historical")
     public List<Booking> getHistoricalBookingsByUser(@RequestParam("user") Long userId){
-    	List<Booking> bookings = bookingService.getByUSer(userId);
+    	List<Booking> bookings = bookingService.getByUSer(userId, false);
     	LocalDate today = LocalDate.now(); 
     	return bookings.stream().filter(b -> b.getDate().isBefore(today)).collect(Collectors.toList());
     }
     
     @GetMapping("/current")
     public List<Booking> getCurrentBookingsByUser(@RequestParam("user") Long userId){
-    	List<Booking> bookings = bookingService.getByUSer(userId);
+    	List<Booking> bookings = bookingService.getByUSer(userId, false);
     	LocalDate today = LocalDate.now(); 
     	return bookings.stream().filter(b -> b.getDate().isAfter(today) || b.getDate().equals(today)).collect(Collectors.toList());
     }
