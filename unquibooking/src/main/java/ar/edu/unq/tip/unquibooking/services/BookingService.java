@@ -78,4 +78,8 @@ public class BookingService {
     public List<Booking> getByUSer(Long user){
     	return bookingRepository.findByUserId(user);
     }
+    
+    public List<Booking> getByDate(LocalDate date){
+    	return bookingRepository.findByDate(date);
+    }
 }

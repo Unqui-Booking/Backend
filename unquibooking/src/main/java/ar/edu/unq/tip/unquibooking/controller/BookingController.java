@@ -111,5 +111,10 @@ public class BookingController {
     	LocalDate today = LocalDate.now(); 
     	return bookings.stream().filter(b -> b.getDate().isAfter(today) || b.getDate().equals(today)).collect(Collectors.toList());
     }
+    
+    @GetMapping("/bydate")
+    public List<Booking> getBookingsByDate(@RequestParam("date")@DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date){
+    	return bookingService.getByDate(date);
+    }
 
 }
