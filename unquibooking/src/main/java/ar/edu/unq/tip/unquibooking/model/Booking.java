@@ -33,6 +33,9 @@ public class Booking {
     @Column
 	private boolean deleted;
     
+    @Column
+    private String state;
+    
     @ManyToOne(cascade=CascadeType.MERGE)
     @JoinColumn(name = "user_id")
     private User user;
@@ -44,6 +47,7 @@ public class Booking {
     	this.date = date;
     	this.deleted = false;
     	this.user = user;
+    	this.state = "toConfirm";
     }
     
     public Booking() { }
@@ -102,6 +106,14 @@ public class Booking {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
 	}
 	
 	

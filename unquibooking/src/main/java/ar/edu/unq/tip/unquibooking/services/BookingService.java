@@ -61,6 +61,7 @@ public class BookingService {
 		existingBooking.setDeleted(booking.isDeleted());
 		existingBooking.setEndTime(booking.getEndTime());
 		existingBooking.setStartTime(booking.getStartTime());
+		existingBooking.setState(booking.getState());
 		bookingRepository.save(existingBooking);
 		return existingBooking;
     }
