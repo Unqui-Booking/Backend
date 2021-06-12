@@ -115,7 +115,7 @@ public class BookingController {
     
     @GetMapping("/bydate")
     public List<Booking> getBookingsByDate(@RequestParam("date")@DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date){
-    	return bookingService.getByDate(date);
+    	return bookingService.getByDate(date, false);
     }
 
 }

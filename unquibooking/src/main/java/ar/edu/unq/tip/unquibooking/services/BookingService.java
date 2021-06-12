@@ -107,7 +107,7 @@ public class BookingService {
     	return bookingRepository.findByUserIdAndDeleted(user, deleted);
     }
     
-    public List<Booking> getByDate(LocalDate date){
-    	return bookingRepository.findByDate(date);
+    public List<Booking> getByDate(LocalDate date, boolean deleted){
+    	return bookingRepository.findByDateAndDeleted(date, deleted);
     }
 }
