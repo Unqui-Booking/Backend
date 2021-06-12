@@ -14,7 +14,7 @@ public interface BookingRepository extends CrudRepository<Booking, Long>{
 	public abstract List<Booking> findBySeatId(Long seat);
 	public abstract List<Booking> findBySeatIdAndDateAndStartTimeAndEndTime(Long seat, LocalDate date,Integer startTime, Integer endTime);
 	public abstract List<Booking> findBySeatIdAndDate(Long seat, LocalDate date);
-    public abstract List<Booking> findByUserIdAndDeleted(Long user, boolean deleted);
+    public abstract List<Booking> findByUserIdAndDeletedOrderByDateDesc(Long user, boolean deleted);
     public abstract List<Booking> findByDateAndDeletedOrderByStartTimeAsc(LocalDate date, boolean deleted);
     							  
 }

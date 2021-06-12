@@ -103,7 +103,7 @@ public class BookingService {
     }
     
     public List<Booking> getByUSer(Long user, boolean deleted){
-    	return bookingRepository.findByUserIdAndDeleted(user, deleted);
+    	return bookingRepository.findByUserIdAndDeletedOrderByDateDesc(user, deleted);
     }
     
     public List<Booking> getByDate(LocalDate date, boolean deleted){
