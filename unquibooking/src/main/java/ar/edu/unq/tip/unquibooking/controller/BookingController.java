@@ -11,7 +11,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import ar.edu.unq.tip.unquibooking.exception.BookingNotFoundException;
-import ar.edu.unq.tip.unquibooking.exception.BookingNotUpdateException;
 import ar.edu.unq.tip.unquibooking.exception.BookingRegisteredWithAdminUserException;
 import ar.edu.unq.tip.unquibooking.exception.SeatNotFoundException;
 import ar.edu.unq.tip.unquibooking.exception.UserNotFoundException;

@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ar.edu.unq.tip.unquibooking.exception.BookingNotFoundException;
-import ar.edu.unq.tip.unquibooking.exception.BookingNotUpdateException;
 import ar.edu.unq.tip.unquibooking.exception.BookingRegisteredWithAdminUserException;
 import ar.edu.unq.tip.unquibooking.exception.SeatNotFoundException;
 import ar.edu.unq.tip.unquibooking.exception.UserNotFoundException;
@@ -108,6 +107,6 @@ public class BookingService {
     }
     
     public List<Booking> getByDate(LocalDate date, boolean deleted){
-    	return bookingRepository.findByDateAndDeleted(date, deleted);
+    	return bookingRepository.findByDateAndDeletedOrderByStartTimeAsc(date, deleted);
     }
 }
