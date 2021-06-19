@@ -113,21 +113,19 @@ public class BookingController {
     	return bookings.stream().filter(b -> b.getDate().isAfter(today) || b.getDate().equals(today)).collect(Collectors.toList());
     }
     
-//    @GetMapping("/bydate")
-//    public List<Booking> getBookingsByDate(@RequestParam("date")@DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date){
-//    	return bookingService.getByDate(date, false);
-//    }
-    
     @GetMapping("/bystate")
     public List<Booking> getBookingsByDateAndState(@RequestParam("date")@DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date, @RequestParam("state") String state){
     	return bookingService.getByDateAndState(date, false, state);
     }
     
-    @GetMapping("/today") 
+    @GetMapping("/today")  
     public List<Booking> getBookingsByToday(@RequestParam("date")@DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date){
+    	List<Booking> uploadedBookings = getBookingsByDateAndState(date, "uploaded");
     	List<Booking> toConfirmBookings = getBookingsByDateAndState(date, "toConfirm");
     	List<Booking> expiredBookings = getBookingsByDateAndState(date, "expired");
-    	return Stream.concat(toConfirmBookings.stream(), expiredBookings.stream()).collect(Collectors.toList());
+    	List<Booking> listResult = Stream.concat(toConfirmBookings.stream(), expiredBookings.stream()).collect(Collectors.toList());
+    	List<Booking> listResult2 = Stream.concat(listResult.stream(), uploadedBookings.stream()).collect(Collectors.toList());
+    	return listResult2;
     }
 
 }

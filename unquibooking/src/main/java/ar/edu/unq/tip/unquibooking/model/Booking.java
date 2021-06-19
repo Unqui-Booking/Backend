@@ -47,7 +47,7 @@ public class Booking {
     	this.date = date;
     	this.deleted = false;
     	this.user = user;
-    	this.state = "toConfirm";
+    	this.state = "uploaded";
     }
     
     public Booking() { }
