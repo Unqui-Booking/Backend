@@ -110,4 +110,8 @@ public class BookingService {
     public List<Booking> getByDateAndState(LocalDate date, boolean deleted, String state){
     	return bookingRepository.findByDateAndDeletedAndStateOrderByStartTimeAsc(date, deleted, state);
     }
+    
+    public List<Booking> getByStateFinedAndUser(Long user){
+    	return  bookingRepository.findByStateAndUserIdAndDeletedOrderByDateDesc("fined", user, false);    
+    }
 }

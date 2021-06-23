@@ -128,4 +128,10 @@ public class BookingController {
     	return listResult2;
     }
 
+    @GetMapping("/fined")
+    public List<Booking> getBookingFinedByUser(@RequestParam("user") Long userId) {
+    	return bookingService.getByStateFinedAndUser(userId);
+    }
+    
+    
 }

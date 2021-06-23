@@ -1,8 +1,10 @@
 package ar.edu.unq.tip.unquibooking.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -48,6 +50,11 @@ public class UserController {
 	@GetMapping("/login")
 	public List<User> getUserByMailAndPassword(@RequestParam("mail") String mail, @RequestParam("password") String password){
 		return userService.getUserByMailAndPassword(mail, password);
+	}
+	
+	@GetMapping("/fined")
+	public boolean userStillFinedAtDate(@RequestParam("date")@DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date, @RequestParam("user") Long idUser) {
+		return userService.userStillFinedAtDate(date, idUser);
 	}
 
 }

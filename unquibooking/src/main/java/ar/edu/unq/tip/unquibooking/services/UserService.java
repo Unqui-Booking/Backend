@@ -1,5 +1,6 @@
 package ar.edu.unq.tip.unquibooking.services;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import ar.edu.unq.tip.unquibooking.exception.UserBadRequestException;
 import ar.edu.unq.tip.unquibooking.exception.UserNotFoundException;
+import ar.edu.unq.tip.unquibooking.model.Booking;
 import ar.edu.unq.tip.unquibooking.model.User;
 import ar.edu.unq.tip.unquibooking.repositories.UserRepository;
 
@@ -18,6 +20,8 @@ public class UserService {
 	
 	@Autowired
 	private UserRepository userRepository;
+	@Autowired
+	private BookingService bookingService;
 	
 	public List<User> getAllUsers(){
 		return IteratorUtils.toList(userRepository.findAll().iterator());
@@ -63,7 +67,17 @@ public class UserService {
 
 	private boolean validateUser(User user) {
 		return validateName(user.getName()) && validateMail(user.getMail()) && validatePassword(user.getPassword());
-		
+	}
+	
+	public boolean userStillFinedAtDate(LocalDate date, Long idUser) {
+		boolean stillFined = false;
+		List<Booking> bookingsFined = bookingService.getByStateFinedAndUser(idUser);
+		if(bookingsFined.size()>0) {
+			LocalDate finedDate  = bookingsFined.get(0).getDate();
+			LocalDate limitDateFined = finedDate.plusDays(8);//an user still fined after a week
+			stillFined = date.isBefore(limitDateFined);
+		}
+		return stillFined;
 	}
 	
 }
