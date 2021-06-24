@@ -1,6 +1,8 @@
 package ar.edu.unq.tip.unquibooking.services;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -69,15 +71,21 @@ public class UserService {
 		return validateName(user.getName()) && validateMail(user.getMail()) && validatePassword(user.getPassword());
 	}
 	
-	public boolean userStillFinedAtDate(LocalDate date, Long idUser) {
-		boolean stillFined = false;
+	public HashMap<String, String> userStillFinedAtDate(LocalDate date, Long idUser) {
+		HashMap<String, String> mapFined = new HashMap<String, String>();
+		Boolean stillFined = false;
+		LocalDate limitDateFined;
 		List<Booking> bookingsFined = bookingService.getByStateFinedAndUser(idUser);
 		if(bookingsFined.size()>0) {
 			LocalDate finedDate  = bookingsFined.get(0).getDate();
-			LocalDate limitDateFined = finedDate.plusDays(8);//an user still fined after a week
+			limitDateFined = finedDate.plusDays(8);//an user still fined after a week
 			stillFined = date.isBefore(limitDateFined);
+			mapFined.put("dateLimit", limitDateFined.minusDays(1).format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+		}else {
+			mapFined.put("dateLimit", null);
 		}
-		return stillFined;
+		mapFined.put("fined", stillFined.toString());
+		return mapFined;
 	}
 	
 }

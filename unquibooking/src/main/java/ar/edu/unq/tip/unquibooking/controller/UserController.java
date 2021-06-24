@@ -1,6 +1,7 @@
 package ar.edu.unq.tip.unquibooking.controller;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +54,7 @@ public class UserController {
 	}
 	
 	@GetMapping("/fined")
-	public boolean userStillFinedAtDate(@RequestParam("date")@DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date, @RequestParam("user") Long idUser) {
+	public HashMap<String, String> userStillFinedAtDate(@RequestParam("date")@DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date, @RequestParam("user") Long idUser) {
 		return userService.userStillFinedAtDate(date, idUser);
 	}
 
