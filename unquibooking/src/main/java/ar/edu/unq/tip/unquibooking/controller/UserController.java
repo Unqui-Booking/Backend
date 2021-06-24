@@ -54,7 +54,7 @@ public class UserController {
 	}
 	
 	@GetMapping("/fined")
-	public HashMap<String, String> userStillFinedAtDate(@RequestParam("date")@DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date, @RequestParam("user") Long idUser) {
+	public HashMap<String, Object> userStillFinedAtDate(@RequestParam("date")@DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date, @RequestParam("user") Long idUser) {
 		return userService.userStillFinedAtDate(date, idUser);
 	}
 

@@ -71,8 +71,8 @@ public class UserService {
 		return validateName(user.getName()) && validateMail(user.getMail()) && validatePassword(user.getPassword());
 	}
 	
-	public HashMap<String, String> userStillFinedAtDate(LocalDate date, Long idUser) {
-		HashMap<String, String> mapFined = new HashMap<String, String>();
+	public HashMap<String, Object> userStillFinedAtDate(LocalDate date, Long idUser) {
+		HashMap<String, Object> mapFined = new HashMap<String, Object>();
 		Boolean stillFined = false;
 		LocalDate limitDateFined;
 		List<Booking> bookingsFined = bookingService.getByStateFinedAndUser(idUser);
@@ -84,7 +84,7 @@ public class UserService {
 		}else {
 			mapFined.put("dateLimit", null);
 		}
-		mapFined.put("fined", stillFined.toString());
+		mapFined.put("fined", stillFined);
 		return mapFined;
 	}
 	
