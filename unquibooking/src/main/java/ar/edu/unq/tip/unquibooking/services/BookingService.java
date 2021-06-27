@@ -13,7 +13,6 @@ import ar.edu.unq.tip.unquibooking.exception.BookingRegisteredWithAdminUserExcep
 import ar.edu.unq.tip.unquibooking.exception.SeatNotFoundException;
 import ar.edu.unq.tip.unquibooking.exception.UserNotFoundException;
 import ar.edu.unq.tip.unquibooking.model.Booking;
-import ar.edu.unq.tip.unquibooking.model.Desk;
 import ar.edu.unq.tip.unquibooking.model.Seat;
 import ar.edu.unq.tip.unquibooking.model.User;
 import ar.edu.unq.tip.unquibooking.repositories.BookingRepository;

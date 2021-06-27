@@ -17,7 +17,6 @@ import ar.edu.unq.tip.unquibooking.exception.SeatNotFoundException;
 import ar.edu.unq.tip.unquibooking.exception.UserNotFoundException;
 import ar.edu.unq.tip.unquibooking.model.Booking;
 import ar.edu.unq.tip.unquibooking.model.Seat;
-import ar.edu.unq.tip.unquibooking.repositories.BookingRepository;
 import ar.edu.unq.tip.unquibooking.services.BookingService;
 import ar.edu.unq.tip.unquibooking.services.SeatService;
 
@@ -30,8 +29,6 @@ public class BookingController {
     BookingService bookingService;
     @Autowired
     SeatService seatService;
-    @Autowired
-    BookingRepository br;
 
     @GetMapping()
     public List<Booking> getAllBookings(){
