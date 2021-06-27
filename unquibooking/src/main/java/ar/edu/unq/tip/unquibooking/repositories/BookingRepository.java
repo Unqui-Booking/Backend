@@ -17,4 +17,5 @@ public interface BookingRepository extends CrudRepository<Booking, Long>{
     public abstract List<Booking> findByUserIdAndDeletedOrderByDateDesc(Long user, boolean deleted);
     public abstract List<Booking> findByDateAndDeletedAndStateOrderByStartTimeAsc(LocalDate date, boolean deleted, String state);
     public abstract List<Booking> findByStateAndUserIdAndDeletedOrderByDateDesc(String state, Long user, boolean deleted);
+    public abstract List<Booking> findByDateGreaterThanEqualAndDateLessThanEqualAndUserIdAndDeleted(LocalDate finedDate, LocalDate limitFinedDate, Long userId, boolean deleted);
 }

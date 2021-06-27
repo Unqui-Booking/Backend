@@ -113,4 +113,8 @@ public class BookingService {
     public List<Booking> getByStateFinedAndUser(Long user){
     	return  bookingRepository.findByStateAndUserIdAndDeletedOrderByDateDesc("fined", user, false);    
     }
+    
+    public List<Booking> getBookingsByUserBetweenDates(LocalDate startDate, LocalDate endDate, Long userId, boolean deleted){
+    	return bookingRepository.findByDateGreaterThanEqualAndDateLessThanEqualAndUserIdAndDeleted(startDate, endDate, userId, deleted);
+    }
 }
