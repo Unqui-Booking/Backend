@@ -17,6 +17,7 @@ import ar.edu.unq.tip.unquibooking.exception.SeatNotFoundException;
 import ar.edu.unq.tip.unquibooking.exception.UserNotFoundException;
 import ar.edu.unq.tip.unquibooking.model.Booking;
 import ar.edu.unq.tip.unquibooking.model.Seat;
+import ar.edu.unq.tip.unquibooking.repositories.BookingRepository;
 import ar.edu.unq.tip.unquibooking.services.BookingService;
 import ar.edu.unq.tip.unquibooking.services.SeatService;
 
@@ -29,6 +30,8 @@ public class BookingController {
     BookingService bookingService;
     @Autowired
     SeatService seatService;
+    @Autowired
+    BookingRepository br;
 
     @GetMapping()
     public List<Booking> getAllBookings(){
@@ -102,15 +105,14 @@ public class BookingController {
     @GetMapping("/historical")
     public List<Booking> getHistoricalBookingsByUser(@RequestParam("user") Long userId){
     	List<Booking> bookings = bookingService.getByUSer(userId, false);
-    	LocalDate today = LocalDate.now(); 
-    	return bookings.stream().filter(b -> b.getDate().isBefore(today)).collect(Collectors.toList());
+    	return bookings.stream().filter(b -> b.getState().equals("confirmed") || b.getState().equals("cancelled") || b.getState().equals("fined")).collect(Collectors.toList());
     }
     
     @GetMapping("/current")
     public List<Booking> getCurrentBookingsByUser(@RequestParam("user") Long userId){
     	List<Booking> bookings = bookingService.getByUSer(userId, false);
     	LocalDate today = LocalDate.now(); 
-    	return bookings.stream().filter(b -> b.getDate().isAfter(today) || b.getDate().equals(today)).collect(Collectors.toList());
+    	return bookings.stream().filter(b -> (b.getDate().isAfter(today) || b.getDate().equals(today)) && (b.getState().equals("uploaded") || b.getState().equals("expired") || b.getState().equals("toConfirm"))).collect(Collectors.toList());
     }
     
     @GetMapping("/bystate")
