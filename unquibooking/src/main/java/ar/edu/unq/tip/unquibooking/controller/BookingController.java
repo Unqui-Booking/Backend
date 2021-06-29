@@ -138,7 +138,10 @@ public class BookingController {
     												   @RequestParam("user") Long userId){
     	return bookingService.getBookingsByUserBetweenDates(startDate, endDate, userId, false);
     }
-    	
     
-    
+    @GetMapping("/byname")
+    public List<Booking> getByUserName(@RequestParam("name") String userName){
+    	List<Booking> bookings = getBookingsByToday(LocalDate.now());
+    	return bookings.stream().filter(booking -> booking.getUser().getName().contains(userName)).collect(Collectors.toList());
+    }
 }
