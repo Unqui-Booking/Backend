@@ -136,7 +136,9 @@ public class BookingController {
     public List<Booking> getBookingsByUserBetweenDates(@RequestParam("start")@DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate, 
     												   @RequestParam("end")@DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate,
     												   @RequestParam("user") Long userId){
-    	return bookingService.getBookingsByUserBetweenDates(startDate, endDate, userId, false);
+    	
+    	List<Booking> bookings = bookingService.getBookingsByUserBetweenDates(startDate, endDate, userId, false);
+    	return bookings.stream().filter(booking -> !booking.getState().equals("fined")).collect(Collectors.toList());
     }
     
     @GetMapping("/byname")
