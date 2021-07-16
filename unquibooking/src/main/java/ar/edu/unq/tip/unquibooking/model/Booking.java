@@ -20,7 +20,6 @@ public class Booking {
     @JoinColumn(name = "seat_id")
     private Seat seat;
 
-    //@Convert(converter = LocalDateConverter.class)
     @JsonFormat(pattern="yyyy-MM-dd", shape=Shape.STRING)
     @Column(nullable=false)
     private LocalDate date;
@@ -30,12 +29,25 @@ public class Booking {
 
     @Column(nullable=false)
     private Integer endTime;
+    
+    @Column
+	private boolean deleted;
+    
+    @Column
+    private String state;
+    
+    @ManyToOne(cascade=CascadeType.MERGE)
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    public Booking(Seat seat, Integer startTime, Integer endTime, LocalDate date) {
+    public Booking(Seat seat, Integer startTime, Integer endTime, LocalDate date, User user) {
     	this.seat = seat;
     	this.startTime = startTime;
     	this.endTime = endTime;
     	this.date = date;
+    	this.deleted = false;
+    	this.user = user;
+    	this.state = "uploaded";
     }
     
     public Booking() { }
@@ -79,5 +91,31 @@ public class Booking {
 	public void setSeat(Seat seat) {
 		this.seat = seat;
 	}
+
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+	
+	
 
 }

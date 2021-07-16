@@ -8,22 +8,30 @@ public class Seat {
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(unique=true, nullable=false, name="seat_id")
+    @Column(unique=true, name="seat_id")
     private Long id;
     
 	@ManyToOne(cascade={CascadeType.REFRESH, CascadeType.MERGE})
 	@JoinColumn(name = "desk_id")
 	private Desk desk;
-    
-	@Column(nullable=false)
-    private boolean available;
 	
-	public Seat(Desk desk, boolean available) {
+	@Column
+	private boolean deleted;
+	
+	public Seat(Desk desk) {
 		this.desk = desk;
-		this.available = available;
+		this.deleted = false;
 	}
 	
 	public Seat() { }
+
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
+	}
 
 	public Long getId() {
 		return id;
@@ -40,13 +48,4 @@ public class Seat {
 	public void setDesk(Desk desk) {
 		this.desk = desk;
 	}
-
-	public boolean getAvailable() {
-		return available;
-	}
-
-	public void setAvailable(boolean available) {
-		this.available = available;
-	}
-
 }
