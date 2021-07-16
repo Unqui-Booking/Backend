@@ -15,4 +15,12 @@
 ### Crear la base de datos
 En MySQL se debe correr el comando  <b>CREATE DATABASE unquibooking;</b>
 
+### Actualizar contraseña de base de datos
+En el archivo [application.properties](https://github.com/Unqui-Booking/Backend/blob/main/unquibooking/src/main/resources/application.properties) se debe actualizar la password correspondiente al usuario MySQL involucrado en la base de datos
+
 ### Correr el proyecto desde el IDE correspondiente
+Algunos de los IDEs más usados para trabajar con un backend en java:
+
+
+- [Eclipse](https://www.eclipse.org/downloads/)
+- [IntelliJ](https://www.jetbrains.com/es-es/idea/)
